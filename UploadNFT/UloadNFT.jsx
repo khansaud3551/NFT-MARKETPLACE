@@ -24,6 +24,9 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
   const [category, setCategory] = useState(0);
   const [properties, setProperties] = useState("");
   const [image, setImage] = useState(null);
+  const [collectionName, setCollectionName] = useState("");
+
+ 
 
   const router = useRouter();
 
@@ -125,6 +128,32 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
             Choose an exiting collection or create a new one
           </p>
 
+          {/* //add collection */}
+          <div className={Style.upload_box_input_collection}>
+            <div className={Style.upload_box_input_collection_box}>
+             
+            <div style={{marginBottom:"20px"}} className={formStyle.Form_box_input}>
+            <label htmlFor="CollectionName">Collection Name</label>
+            <div className={formStyle.Form_box_input_box}>
+              <div className={formStyle.Form_box_input_box_icon}>
+         
+
+                <AiTwotonePropertySafety />
+              </div>
+              <input
+                type="text"
+                placeholder="Cute Cats"
+                onChange={(e) => setCollectionName(e.target.value)}
+              />
+            </div>
+          </div>
+          
+            </div>
+
+            </div>
+
+
+
           <div className={Style.upload_box_slider_div}>
             {categoryArry.map((el, i) => (
               <div
@@ -219,11 +248,14 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
                 price,
                 image,
                 description,
-                router
+                router,
+                collectionName,
+                category,
+             
                 // website,
                 // royalties,
                 // fileSize,
-                // category,
+          
                 // properties
               )
             }

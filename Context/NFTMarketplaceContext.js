@@ -143,48 +143,72 @@ export const NFTMarketplaceProvider = ({ children }) => {
 
   //---CREATENFT FUNCTION
 
-  const createNFT = async (name, price, image, description, router, walletAddress, username, bio) => {
+  const createNFT = async (name, price, image, description,router, collectionName, category, username, bio) => {
     if (!name || !description || !price || !image)
       return setError("Data Is Missing"), setOpenError(true);
   
-    const data = JSON.stringify({ name, description, image });
+    const data = JSON.stringify({ name, description, image , category });
   
     try {
       const added = await client.add(data);
       const url = `${subdomain}/ipfs/${added.path}`;
   
       await createSale(url, price);
-      router.push("/searchPage");
   
-      // After minting the NFT, also create a user profile in your backend
-      await axios.post('/api/profiles', {
-        walletAddress,
-        username,
-        bio
-      });
-  
-      // After minting the NFT, also update the collection in your backend
-      // Here we first try to get the collection, and if it doesn't exist we create it
-      const collectionResponse = await axios.get(`/api/collections/${name}`);
-      if (collectionResponse.status === 404) { // assuming your API returns 404 for not found
-        await axios.post('/api/collections', {
-          name,
-          description, // assuming the collection's description is the same as the NFT's
-          nftIDs: [added.path] // assuming the NFT ID is the IPFS path
-        });
-      } else {
-        await axios.put(`/api/collections/${name}`, {
-          nftIDs: [...collectionResponse.data.nftIDs, added.path]
+      let profileExists = false;
+      try {
+        await axios.get(`http://localhost:8080/api/profiles/${currentAccount}`);
+        profileExists = true;
+      } catch (error) {
+        if (error.response && error.response.status !== 404) {
+          throw error;
+        }
+      }
+      
+      if (!profileExists) {
+        await axios.post('http://localhost:8080/api/profiles', {
+          walletAddress : currentAccount,
         });
       }
   
+      let collection;
+      try {
+        const collectionResponse = await axios.get(`http://localhost:8080/api/collections/${collectionName}`);
+        collection = collectionResponse.data;
+      } catch (error) {
+        if (error.response && error.response.status !== 404) {
+          throw error;
+        } else {
+          const newCollectionResponse = await axios.post('http://localhost:8080/api/collections', {
+            name: collectionName,
+            description,
+            nftIDs: [added.path],
+            walletAddress: currentAccount,
+          });
+          collection = newCollectionResponse.data;
+        }
+      }
+  
+      if (collection) {
+        if (!collection.nftIDs.includes(added.path)) { // Check if the NFT ID is not already in the array
+          await axios.put(`http://localhost:8080/api/collections/${collectionName}`, {
+            nftIDs: [...collection.nftIDs, added.path]
+          });
+        }
+      
+        console.log("runing put reqwuest");
+      
+        await axios.post(`http://localhost:8080/api/profiles/${currentAccount}/collections`, {
+          collectionID: collection._id
+        });
+      }
+      
     } catch (error) {
       setError("Error while creating NFT");
+      console.log(error);
       setOpenError(true);
     }
   };
-  
-
 
 
   // const createNFT = async (name, price, image, description, router) => {
@@ -255,7 +279,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
             const tokenURI = await contract.tokenURI(tokenId);
 
             const {
-              data: { image, name, description },
+              data: { image, name, description , category },
             } = await axios.get(tokenURI, {});
             const price = ethers.utils.formatUnits(
               unformattedPrice.toString(),
@@ -270,6 +294,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
               image,
               name,
               description,
+              category,
               tokenURI,
             };
           }
