@@ -8,13 +8,18 @@ const NEXT_PUBLIC_PRIVATE_KEY =
 
 module.exports = {
   solidity: "0.8.17",
-  defaultNetwork: "matic",
+  // defaultNetwork: "matic",
   networks: {
-    hardhat: {},
-    polygon_mumbai: {
-      url: NEXT_PUBLIC_POLYGON_MUMBAI_RPC,
-      accounts: [`0x${NEXT_PUBLIC_PRIVATE_KEY}`],
+    localhost: {
+      url: "http://127.0.0.1:8545",
     },
+    hardhat: {
+      chainId: 31337,
+    },
+    // polygon_mumbai: {
+    //   url: NEXT_PUBLIC_POLYGON_MUMBAI_RPC,
+    //   accounts: [`0x${NEXT_PUBLIC_PRIVATE_KEY}`],
+    // },
   },
 
   //   // fuji: {

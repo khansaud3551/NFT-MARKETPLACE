@@ -144,7 +144,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
   //---CREATENFT FUNCTION
 
   const createNFT = async (name, price, image, description,router, collectionName, category, username, bio) => {
-    if (!name || !description || !price || !image)
+    if (!name || !description || !price || !image || !category)
       return setError("Data Is Missing"), setOpenError(true);
   
     const data = JSON.stringify({ name, description, image , category });
@@ -152,6 +152,12 @@ export const NFTMarketplaceProvider = ({ children }) => {
     try {
       const added = await client.add(data);
       const url = `${subdomain}/ipfs/${added.path}`;
+
+      // Save NFT data in your backend
+      await axios.post('http://localhost:8080/api/nfts', {
+        ipfsPath: added.path,
+        category: category
+      });
   
       await createSale(url, price);
   
