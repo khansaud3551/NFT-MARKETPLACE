@@ -22,7 +22,6 @@
     "web3modal": "^1.9.9"
   },
   "devDependencies": {
-    "@ethersproject/providers": "5.4.7",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
