@@ -20,6 +20,7 @@ const account = () => {
     maxSize: 5000000,
   });
 
+
   return (
     <div className={Style.account}>
       <div className={Style.account_info}>

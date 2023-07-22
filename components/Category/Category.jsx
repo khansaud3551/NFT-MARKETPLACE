@@ -108,7 +108,7 @@ const Category = ({oldData}) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/nfts/categories');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/nfts/categories`);
         const categories = response.data;
         //get the seller and buyer data from the old data by comparing the ipfs path
 

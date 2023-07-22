@@ -165,22 +165,19 @@ export const NFTMarketplaceProvider = ({ children }) => {
           console.log(sellerAndBuyer[0]);
 
           // Save NFT data in your backend including seller and buyer
-          await axios.post('http://localhost:8080/api/nfts', {
+          //'http://localhost:8080/api/nfts'
+          //use process.env.NEXT_PUBLIC_API_URL
+          await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/nfts`, {
               ipfsPath: added.path,
               category: category,
               seller: sellerAndBuyer[0],  // assuming that the getSellerAndBuyerOfNFT returns an object with seller and buyer properties
               owner: sellerAndBuyer[1]
           });
 
-        // // Save NFT data in your backend
-        // await axios.post('http://localhost:8080/api/nfts', {
-        //   ipfsPath: added.path,
-        //   category: category
-        // });
   
       let profileExists = false;
       try {
-        await axios.get(`http://localhost:8080/api/profiles/${currentAccount}`);
+        await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}`);
         profileExists = true;
       } catch (error) {
         if (error.response && error.response.status !== 404) {
@@ -189,20 +186,20 @@ export const NFTMarketplaceProvider = ({ children }) => {
       }
       
       if (!profileExists) {
-        await axios.post('http://localhost:8080/api/profiles', {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles`, {
           walletAddress : currentAccount,
         });
       }
   
       let collection;
       try {
-        const collectionResponse = await axios.get(`http://localhost:8080/api/collections/${collectionName}`);
+        const collectionResponse =  await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/collections/${collectionName}`);
         collection = collectionResponse.data;
       } catch (error) {
         if (error.response && error.response.status !== 404) {
           throw error;
         } else {
-          const newCollectionResponse = await axios.post('http://localhost:8080/api/collections', {
+          const newCollectionResponse =  await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/collections`, {
             name: collectionName,
             description,
             nftIDs: [added.path],
@@ -214,14 +211,14 @@ export const NFTMarketplaceProvider = ({ children }) => {
   
       if (collection) {
         if (!collection.nftIDs.includes(added.path)) { // Check if the NFT ID is not already in the array
-          await axios.put(`http://localhost:8080/api/collections/${collectionName}`, {
+          await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/collections/${collectionName}`, {
             nftIDs: [...collection.nftIDs, added.path]
           });
         }
       
         console.log("runing put reqwuest");
       
-        await axios.post(`http://localhost:8080/api/profiles/${currentAccount}/collections`, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}/collections`, {
           collectionID: collection._id
         });
       }

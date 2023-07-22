@@ -13,7 +13,7 @@ const CategoryPage = () => {
     useEffect(() => {
       const fetchCategoryNFTs = async () => {
           try {
-              const response = await axios.get(`http://localhost:8080/api/nfts/category/${categoryName}`);
+              const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/nfts/category/${categoryName}`);
               const nfts = response.data;
               // Fetch additional data for each NFT from IPFS
               for (let nft of nfts) {
