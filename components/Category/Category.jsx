@@ -101,7 +101,7 @@ const categoryImages = {
   // add more mappings as required
 };
 
-const Category = () => {
+const Category = ({oldData}) => {
   const [categories, setCategories] = useState([]);
   const router = useRouter();
 
@@ -110,6 +110,14 @@ const Category = () => {
       try {
         const response = await axios.get('http://localhost:8080/api/nfts/categories');
         const categories = response.data;
+        //get the seller and buyer data from the old data by comparing the ipfs path
+
+       
+      
+  
+        
+       
+
         setCategories(categories);
       } catch (error) {
         console.error("Error fetching categories", error);
@@ -122,6 +130,8 @@ const Category = () => {
   const handleCategoryClick = (category) => {
     router.push(`/category/${category.name}`);
   };
+
+  console.log("categories",categories);
 
   return (
     <div className={Style.box_category}>

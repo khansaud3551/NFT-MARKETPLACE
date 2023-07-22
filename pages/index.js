@@ -40,8 +40,8 @@ const Home = () => {
     // if (currentAccount) {
     fetchNFTs().then((items) => {
       console.log(nfts);
-      // setNfts(items.reverse());
-      // setNftsCopy(items);
+      setNfts(items.reverse());
+      setNftsCopy(items);
     });
     // }
   }, []);
@@ -80,7 +80,7 @@ const Home = () => {
         heading="Browse by category"
         paragraph="Explore the NFTs in the most featured categories."
       />
-      <Category />
+      <Category oldData={nfts} />
       <Subscribe />
       <Brand />
       <Video />

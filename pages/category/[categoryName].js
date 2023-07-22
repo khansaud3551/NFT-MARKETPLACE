@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { NFTCardTwo } from '../../collectionPage/collectionIndex';
 
 const CategoryPage = () => {
     const router = useRouter()
@@ -37,13 +38,8 @@ const CategoryPage = () => {
     return (
         <div>
             <h1>{categoryName}</h1>
-            {nfts.map((nft, i) => (
-                <div key={i}>
-                    <h2>{nft.name}</h2>
-                    <p>{nft.description}</p>
-                    <img src={nft.image} />
-                </div>
-            ))}
+
+            <NFTCardTwo  NFTData={nfts} />
         </div>
     )
 }

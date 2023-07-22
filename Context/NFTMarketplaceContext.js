@@ -148,18 +148,35 @@ export const NFTMarketplaceProvider = ({ children }) => {
       return setError("Data Is Missing"), setOpenError(true);
   
     const data = JSON.stringify({ name, description, image , category });
+
+    const contract = await connectingWithSmartContract();
   
     try {
       const added = await client.add(data);
       const url = `${subdomain}/ipfs/${added.path}`;
 
-      // Save NFT data in your backend
-      await axios.post('http://localhost:8080/api/nfts', {
-        ipfsPath: added.path,
-        category: category
-      });
+    
   
-      await createSale(url, price);
+      const tokenId =  await createSale(url, price);
+      console.log(tokenId);
+
+          // Get the seller and buyer of the NFT
+          const sellerAndBuyer = await contract.getSellerAndBuyerOfNFT(tokenId);
+          console.log(sellerAndBuyer[0]);
+
+          // Save NFT data in your backend including seller and buyer
+          await axios.post('http://localhost:8080/api/nfts', {
+              ipfsPath: added.path,
+              category: category,
+              seller: sellerAndBuyer[0],  // assuming that the getSellerAndBuyerOfNFT returns an object with seller and buyer properties
+              owner: sellerAndBuyer[1]
+          });
+
+        // // Save NFT data in your backend
+        // await axios.post('http://localhost:8080/api/nfts', {
+        //   ipfsPath: added.path,
+        //   category: category
+        // });
   
       let profileExists = false;
       try {
@@ -253,15 +270,23 @@ export const NFTMarketplaceProvider = ({ children }) => {
             value: listingPrice.toString(),
           });
 
-      await transaction.wait();
       console.log(transaction);
+      
+      const receipt = await transaction.wait();
+      const tokenIdEvent = receipt.events?.find(e => e.event === "Transfer")?.args?.tokenId;
+
+      // Check if the token ID is returned by the event
+      if(!tokenIdEvent) {
+        throw new Error("Token ID not found in transaction receipt");
+      }
+
+      return tokenIdEvent.toNumber(); // make sure to return the tokenId so it can be used where createSale is called
     } catch (error) {
       setError("error while creating sale");
       setOpenError(true);
       console.log(error);
     }
-  };
-
+};
   //--FETCHNFTS FUNCTION
 
   const fetchNFTs = async () => {
@@ -278,6 +303,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
       const contract = fetchContract(provider);
 
       const data = await contract.fetchMarketItems();
+      console.log(data);
 
       const items = await Promise.all(
         data.map(

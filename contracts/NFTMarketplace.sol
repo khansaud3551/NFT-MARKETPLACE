@@ -180,6 +180,11 @@ contract NFTMarketplace is ERC721URIStorage {
         }
         return items;
     }
+ /* Returns buyer and seller */
+    function getSellerAndBuyerOfNFT(uint256 tokenId) public view returns (address, address) {
+    MarketItem memory marketItem = idToMarketItem[tokenId];
+    return (marketItem.seller, marketItem.owner);
+}
 
     /* Returns only items a user has listed */
     function fetchItemsListed() public view returns (MarketItem[] memory) {
