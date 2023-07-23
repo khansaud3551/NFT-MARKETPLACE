@@ -147,7 +147,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
     if (!name || !description || !price || !image || !category)
       return setError("Data Is Missing"), setOpenError(true);
   
-    const data = JSON.stringify({ name, description, image , category });
+    const data = JSON.stringify({ name, price , description, image , category });
 
     const contract = await connectingWithSmartContract();
   
@@ -308,7 +308,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
             const tokenURI = await contract.tokenURI(tokenId);
 
             const {
-              data: { image, name, description , category },
+              data: {  image, name, description , category },
             } = await axios.get(tokenURI, {});
             const price = ethers.utils.formatUnits(
               unformattedPrice.toString(),
