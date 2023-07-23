@@ -148,6 +148,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
       return setError("Data Is Missing"), setOpenError(true);
   
     const data = JSON.stringify({ name, price , description, image , category });
+    console.log(data,"data");
 
     const contract = await connectingWithSmartContract();
   
@@ -300,7 +301,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
       const contract = fetchContract(provider);
 
       const data = await contract.fetchMarketItems();
-      console.log(data);
+      console.log(data,"market items from contract");
 
       const items = await Promise.all(
         data.map(
@@ -339,9 +340,9 @@ export const NFTMarketplaceProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchNFTs();
-  }, []);
+  // useEffect(() => {
+  //   fetchNFTs();
+  // }, []);
 
   //--FETCHING MY NFT OR LISTED NFTs
   const fetchMyNFTsOrListedNFTs = async (type) => {
