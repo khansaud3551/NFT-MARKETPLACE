@@ -30,6 +30,33 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
 
   const router = useRouter();
 
+  // const categoryArry = [
+  //   {
+  //     image: images.nft_image_1,
+  //     category: "Sports",
+  //   },
+  //   {
+  //     image: images.nft_image_2,
+  //     category: "Arts",
+  //   },
+  //   {
+  //     image: images.nft_image_3,
+  //     category: "Music",
+  //   },
+  //   {
+  //     image: images.nft_image_1,
+  //     category: "Digital",
+  //   },
+  //   {
+  //     image: images.nft_image_2,
+  //     category: "Time",
+  //   },
+  //   {
+  //     image: images.nft_image_3,
+  //     category: "Photography",
+  //   },
+  // ];
+
   const categoryArry = [
     {
       image: images.nft_image_1,
@@ -79,7 +106,7 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
           <label htmlFor="nft">Item Name</label>
           <input
             type="text"
-            placeholder="shoaib bhai"
+            placeholder="Monalisa Nft"
             className={formStyle.Form_box_input_userName}
             onChange={(e) => setName(e.target.value)}
           />
@@ -177,14 +204,14 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
                     <TiTick />
                   </div>
                 </div>
-                <p>Crypto Legend - {el.category} </p>
+                <p > {el.category} </p>
               </div>
             ))}
           </div>
         </div>
 
         <div className={formStyle.Form_box_input_social}>
-          <div className={formStyle.Form_box_input}>
+          {/* <div className={formStyle.Form_box_input}>
             <label htmlFor="Royalties">Royalties</label>
             <div className={formStyle.Form_box_input_box}>
               <div className={formStyle.Form_box_input_box_icon}>
@@ -196,7 +223,7 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
                 onChange={(e) => setRoyalties(e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
           <div className={formStyle.Form_box_input}>
             <label htmlFor="size">Size</label>
             <div className={formStyle.Form_box_input_box}>
@@ -211,7 +238,7 @@ const UloadNFT = ({ uploadToIPFS, createNFT }) => {
             </div>
           </div>
           <div className={formStyle.Form_box_input}>
-            <label htmlFor="Propertie">Propertie</label>
+            <label htmlFor="Propertie">Properties</label>
             <div className={formStyle.Form_box_input_box}>
               <div className={formStyle.Form_box_input_box_icon}>
                 <AiTwotonePropertySafety />

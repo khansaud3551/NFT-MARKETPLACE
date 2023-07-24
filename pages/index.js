@@ -51,6 +51,8 @@ const Home = () => {
   const creators = getTopCreators(nfts);
   // console.log(creators);
 
+  console.log("nfts ccreators", creators);
+
   return (
     <div className={Style.homePage}>
       <HeroSection />

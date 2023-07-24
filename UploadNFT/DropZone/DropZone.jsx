@@ -82,7 +82,7 @@ const DropZone = ({
               <div className={Style.DropZone_box_aside_box_preview_three}>
                 <p>
                   <span>Royalties</span>
-                  {royalties || ""}
+                  {royalties || "20%"}
                 </p>
                 <p>
                   <span>FileSize</span>

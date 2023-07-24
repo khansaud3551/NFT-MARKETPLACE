@@ -1,29 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { MdVerified } from "react-icons/md";
+import Link from "next/link";
 
 //INTERNAL IMPORT
 import Style from "./DaysComponents.module.css";
 import images from "../../../img";
+import axios from "axios";
+import Collection from "../Collection";
+
+
 
 const DaysComponents = ({ el, i }) => {
+
+  const defaultImage1 = images[`creatorbackground${i + 2}`];
+  const defaultImage2 = images[`creatorbackground${i + 4}`];
+  const defaultImage3 = images[`creatorbackground${i + 3}`];
+
+  const nftImage1 = el.nfts[0]?.image || defaultImage1;
+  const nftImage2 = el.nfts[1]?.image || defaultImage2;
+  const nftImage3 = el.nfts[2]?.image || defaultImage3
+
   return (
+    <>
+     <Link href={`/collection/${el.name}`}
+     >
     <div className={Style.daysComponent}>
       <div className={Style.daysComponent_box}>
         <div className={Style.daysComponent_box_img}>
-          <Image
-            src={el.background}
-            className={Style.daysComponent_box_img_img}
-            alt="profile background"
-            width={500}
-            height={300}
-            objectFit="covers"
-          />
+        {el.nfts.length > 0 ? (
+            <Image
+              src={el.nfts[0].image}
+              className={Style.daysComponent_box_img_img}
+              alt="NFT image"
+              width={500}
+              height={300}
+              objectFit="cover"
+            />
+          ) : null}
         </div>
 
         <div className={Style.daysComponent_box_profile}>
           <Image
-            src={images[`creatorbackground${i + 2}`]}
+            src={nftImage2}
             alt="profile"
             width={200}
             height={200}
@@ -31,7 +50,7 @@ const DaysComponents = ({ el, i }) => {
             objectFit="covers"
           />
           <Image
-            src={images[`creatorbackground${i + 4}`]}
+            src={nftImage3}
             alt="profile"
             width={200}
             height={200}
@@ -39,7 +58,7 @@ const DaysComponents = ({ el, i }) => {
             objectFit="covers"
           />
           <Image
-            src={images[`creatorbackground${i + 3}`]}
+            src={defaultImage3}
             alt="profile"
             width={200}
             height={200}
@@ -49,36 +68,17 @@ const DaysComponents = ({ el, i }) => {
         </div>
 
         <div className={Style.daysComponent_box_title}>
-          <h2>Amazing Collection</h2>
-          <div className={Style.daysComponent_box_title_info}>
-            <div className={Style.daysComponent_box_title_info_profile}>
-              <Image
-                src={el.user}
-                alt="profile"
-                width={30}
-                height={30}
-                objectFit="covers"
-                className={Style.daysComponent_box_title_info_profile_img}
-              />
-
-              <p>
-                Creator
-                <span>
-                  Shoaib Bhai
-                  <small>
-                    <MdVerified />
-                  </small>
-                </span>
-              </p>
+          <h2>{el.name}</h2>
+          <div className={Style.daysComponent_box_title_info_price}>
+              <small>{el.totalPrice} ETH</small>
+              
             </div>
-
-            <div className={Style.daysComponent_box_title_info_price}>
-              <small>{i + 4}.255 ETH</small>
-            </div>
-          </div>
+        
         </div>
       </div>
     </div>
+    </Link>
+    </>
   );
 };
 
