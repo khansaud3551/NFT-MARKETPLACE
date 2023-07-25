@@ -42,9 +42,9 @@ const collectionProfile = ({collection}) => {
         </div>
 
         <div className={Style.collectionProfile_box_middle}>
-          <h1>{collection.name}</h1>
+          <h1>{collection?.name}</h1>
           <p>
-           {collection.description}
+           {collection?.description}
           </p>
 
           <div className={Style.collectionProfile_box_middle_box}>
@@ -54,7 +54,7 @@ const collectionProfile = ({collection}) => {
                 key={i + 1}
               >
                 <small>Floor price</small>
-                <p>{collection.totalPrice}</p>
+                <p>{collection?.totalPrice}</p>
                 <span>+ {i + 2}.11%</span>
               </div>
             ))}
