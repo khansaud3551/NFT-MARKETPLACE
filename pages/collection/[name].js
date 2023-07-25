@@ -1,14 +1,64 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios';
+import images from "../../img";
+//INTERNAL IMPORT
+import Style from "../../styles/collection.module.css";
+import {
+  Banner,
+  CollectionProfile,
+  NFTCardTwo,
+} from "../../collectionPage/collectionIndex";
+import { Slider, Brand } from "../../components/componentsindex";
+import Filter from "../../components/Filter/Filter";
 
-export default function SingleCategory({nfts}) {
+export default function SingleCategory({collection}) {
+
     const router = useRouter()
     const { name } = router.query
-    console.log(nfts, "name");
+    console.log(collection, "name");
+
+    const collectionArray = [
+        {
+          image: images.nft_image_1,
+        },
+        {
+          image: images.nft_image_2,
+        },
+        {
+          image: images.nft_image_3,
+        },
+        {
+          image: images.nft_image_1,
+        },
+        {
+          image: images.nft_image_2,
+        },
+        {
+          image: images.nft_image_3,
+        },
+        {
+          image: images.nft_image_1,
+        },
+        {
+          image: images.nft_image_2,
+        },
+      ];
+
+
+
     return (
         <div>
-         {/* Render your NFTs data here */}  
+        <div className={Style.collection}>
+      <Banner bannerImage={images.creatorbackground1} />
+      <CollectionProfile collection={collection} />
+      <Filter />
+    
+      <NFTCardTwo   NFTData={collection.ipfsData} />
+
+      <Slider />
+      <Brand />
+    </div>
         </div>
     )
 }
@@ -37,7 +87,10 @@ export async function getStaticProps({ params }) {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/collections/${name}`);
     const collection = response.data;
     const subdomain = "https://saud-nft.infura-ipfs.io";
-    console.log(collection,"test collection");  // Log the collection
+    console.log(collection, "test collection");  // Log the collection
+
+    // Initialize total price
+    let totalPrice = 0;
 
     // Check if collection.nftIDs is an array and has items in it
     if (Array.isArray(collection.nftIDs) && collection.nftIDs.length) {
@@ -46,8 +99,10 @@ export async function getStaticProps({ params }) {
             const ipfsResponse = await axios.get(`${subdomain}/ipfs/${nftID}`);
             const ipfsData = ipfsResponse.data;
             
-            // You need to decide how to store and return this data. 
-            // Below is just an example assuming you'd want to add it to the collection object
+            // Add the price of the NFT to the total price
+            if (ipfsData.price) {
+                totalPrice += ipfsData.price;
+            }
 
             // If collection.ipfsData does not exist, create it as an empty array
             if (!collection.ipfsData) {
@@ -59,7 +114,13 @@ export async function getStaticProps({ params }) {
         }
     }
 
-    return { 
-        props: { nfts: collection },
+    // Add total price to the collection object
+    collection.totalPrice = totalPrice;
+
+    return {
+        props: {
+            collection,
+        },
+        revalidate: 60, // In seconds
     };
 }

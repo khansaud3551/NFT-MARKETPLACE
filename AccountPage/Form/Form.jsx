@@ -11,17 +11,29 @@ import {
 import Style from "./Form.module.css";
 import { Button } from "../../components/componentsindex.js";
 
-const Form = () => {
+const Form = ({ formData, setFormData, handleSubmit }) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit();
+  };
+
   return (
     <div className={Style.Form}>
       <div className={Style.Form_box}>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className={Style.Form_box_input}>
-            <label htmlFor="name">Username</label>
+            <label htmlFor="username">Username</label>
             <input
+              name="username"
               type="text"
               placeholder="shoaib bhai"
               className={Style.Form_box_input_userName}
+              value={formData.username}
+              onChange={handleChange}
             />
           </div>
 
@@ -31,18 +43,26 @@ const Form = () => {
               <div className={Style.Form_box_input_box_icon}>
                 <HiOutlineMail />
               </div>
-              <input type="text" placeholder="Email*" />
+              <input 
+                name="email"
+                type="text" 
+                placeholder="Email*" 
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className={Style.Form_box_input}>
             <label htmlFor="description">Description</label>
             <textarea
-              name=""
+              name="description"
               id=""
               cols="30"
               rows="6"
               placeholder="something about yourself in few words"
+              value={formData.description}
+              onChange={handleChange}
             ></textarea>
           </div>
 
@@ -52,8 +72,13 @@ const Form = () => {
               <div className={Style.Form_box_input_box_icon}>
                 <MdOutlineHttp />
               </div>
-
-              <input type="text" placeholder="website" />
+              <input
+                name="website"
+                type="text" 
+                placeholder="website"
+                value={formData.website}
+                onChange={handleChange} 
+              />
             </div>
           </div>
 
@@ -64,25 +89,43 @@ const Form = () => {
                 <div className={Style.Form_box_input_box_icon}>
                   <TiSocialFacebook />
                 </div>
-                <input type="text" placeholder="http://shoaib" />
+                <input 
+                  name="facebook"
+                  type="text" 
+                  placeholder="http://shoaib" 
+                  value={formData.facebook}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className={Style.Form_box_input}>
-              <label htmlFor="Twitter">Twitter</label>
+              <label htmlFor="twitter">Twitter</label>
               <div className={Style.Form_box_input_box}>
                 <div className={Style.Form_box_input_box_icon}>
                   <TiSocialTwitter />
                 </div>
-                <input type="text" placeholder="http://shoaib" />
+                <input 
+                  name="twitter"
+                  type="text" 
+                  placeholder="http://shoaib" 
+                  value={formData.twitter}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className={Style.Form_box_input}>
-              <label htmlFor="Instragram">Instragram</label>
+              <label htmlFor="instagram">Instagram</label>
               <div className={Style.Form_box_input_box}>
                 <div className={Style.Form_box_input_box_icon}>
                   <TiSocialInstagram />
                 </div>
-                <input type="text" placeholder="http://shoaib" />
+                <input 
+                  name="instagram"
+                  type="text" 
+                  placeholder="http://shoaib" 
+                  value={formData.instagram}
+                  onChange={handleChange}
+                />
               </div>
             </div>
           </div>
@@ -96,6 +139,7 @@ const Form = () => {
               <input
                 type="text"
                 placeholder="0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8"
+                readOnly
               />
               <div className={Style.Form_box_input_box_icon}>
                 <MdOutlineContentCopy />
@@ -104,9 +148,17 @@ const Form = () => {
           </div>
 
           <div className={Style.Form_box_btn}>
+          <button
+          type="submit"
+         
+              handleClick={handleSubmit}
+              classStyle={Style.button}
+          >
+            submit
+          </button>
             <Button
               btnName="Upload profile"
-              handleClick={() => {}}
+              handleClick={handleSubmit}
               classStyle={Style.button}
             />
           </div>

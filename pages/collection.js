@@ -48,7 +48,7 @@ const collection = () => {
       <Slider />
       <Brand />
     </div>
-  );
+  ); 
 };
 
 export default collection;

@@ -58,11 +58,8 @@ const Home = () => {
       <HeroSection />
       <Service />
       <BigNFTSilder />
-      <Title
-        heading="Audio Collection"
-        paragraph="Discover the most outstanding NFTs in all topics of life."
-      />
-      <AudioLive />
+    
+     
       {creators.length == 0 ? (
         <Loader />
       ) : (
@@ -70,7 +67,7 @@ const Home = () => {
       )}
 
       <Slider />
-      <Collection />
+  
       <Title
         heading="Featured NFTs"
         paragraph="Discover the most outstanding NFTs in all topics of life."
@@ -78,11 +75,20 @@ const Home = () => {
       <Filter />
       {nfts.length == 0 ? <Loader /> : <NFTCard NFTData={nfts} />}
 
+      <Collection />
+
       <Title
         heading="Browse by category"
         paragraph="Explore the NFTs in the most featured categories."
       />
       <Category oldData={nfts} />
+
+      <Title
+        heading="Audio Collection"
+        paragraph="Discover the most outstanding NFTs in all topics of life."
+      />
+
+      <AudioLive />
       <Subscribe />
       <Brand />
       <Video />

@@ -95,8 +95,11 @@ import Style from "./Category.module.css";
 
 // Here we create a mapping between category names and image URLs
 const categoryImages = {
-  "Dance Monkey": images.creatorbackground6,
+  "Digital": images.creatorbackground6,
   "Sports": images.creatorbackground6,
+  "Photography": images.creatorbackground6,
+  "Time": images.creatorbackground6,
+  "Arts": images.creatorbackground6,
   "Music": images.creatorbackground6,
   // add more mappings as required
 };
@@ -112,11 +115,6 @@ const Category = ({oldData}) => {
         const categories = response.data;
         //get the seller and buyer data from the old data by comparing the ipfs path
 
-       
-      
-  
-        
-       
 
         setCategories(categories);
       } catch (error) {

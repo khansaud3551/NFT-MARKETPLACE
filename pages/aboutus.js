@@ -9,12 +9,12 @@ import images from "../img";
 const aboutus = () => {
   const founderArray = [
     {
-      name: "Niamh O'Shea",
+      name: "Saud Khan",
       position: "Co-founder and Chief Executive",
-      images: images.founder1,
+      images: images.founder2,
     },
     {
-      name: "Danien Jame",
+      name: "Malik Kamran",
       position: "Co-founder and Chief Executive",
       images: images.founder2,
     },
@@ -26,7 +26,7 @@ const aboutus = () => {
     {
       name: "Dara Frazier",
       position: "Co-Founder, Chief Strategy Officer",
-      images: images.founder4,
+      images: images.founder1,
     },
   ];
 

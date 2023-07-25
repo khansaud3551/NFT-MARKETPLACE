@@ -143,7 +143,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
 
   //---CREATENFT FUNCTION
 
-  const createNFT = async (name, price, image, description,router, collectionName, category, username, bio) => {
+  const createNFT = async (name, price, image, description , router, collectionName, category, username, bio) => {
     if (!name || !description || !price || !image || !category)
       return setError("Data Is Missing"), setOpenError(true);
   

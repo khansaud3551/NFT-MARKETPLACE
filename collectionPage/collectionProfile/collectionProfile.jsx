@@ -11,7 +11,7 @@ import {
 import Style from "./collectionProfile.module.css";
 import images from "../../img";
 
-const collectionProfile = () => {
+const collectionProfile = ({collection}) => {
   const cardArray = [1, 2, 3, 4];
   return (
     <div className={Style.collectionProfile}>
@@ -42,11 +42,9 @@ const collectionProfile = () => {
         </div>
 
         <div className={Style.collectionProfile_box_middle}>
-          <h1>Awesome NFTs Collection</h1>
+          <h1>{collection.name}</h1>
           <p>
-            Karafuru is home to 5,555 generative arts where colors reign
-            supreme. Leave the drab reality and enter the world of Karafuru by
-            Museum of Toys.
+           {collection.description}
           </p>
 
           <div className={Style.collectionProfile_box_middle_box}>
@@ -56,7 +54,7 @@ const collectionProfile = () => {
                 key={i + 1}
               >
                 <small>Floor price</small>
-                <p>${i + 1}95,4683</p>
+                <p>{collection.totalPrice}</p>
                 <span>+ {i + 2}.11%</span>
               </div>
             ))}

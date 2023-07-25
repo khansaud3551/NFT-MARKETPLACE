@@ -37,9 +37,8 @@ const CategoryPage = () => {
 
     return (
         <div>
-            <h1>{categoryName}</h1>
-
-            <NFTCardTwo  NFTData={nfts} />
+        <h1 style={{textAlign:"center"}}>{categoryName}</h1>
+            <NFTCardTwo    NFTData={nfts} />
         </div>
     )
 }

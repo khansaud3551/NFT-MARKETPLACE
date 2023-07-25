@@ -104,7 +104,7 @@ const Collection = () => {
   return (
     <div className={Style.collection}>
       <div className={Style.collection_title}>
-        <h2>Top List Creators</h2>
+        <h2>Featured Collections</h2>
   
       </div>
     
