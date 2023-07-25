@@ -54,7 +54,7 @@ export default function SingleCategory({collection}) {
       <CollectionProfile collection={collection} />
       <Filter />
     
-      <NFTCardTwo  NFTData={collection.ipfsData} />
+      {/* <NFTCardTwo NFTData={collection.ipfsData} /> */}
 
       <Slider />
       <Brand />
