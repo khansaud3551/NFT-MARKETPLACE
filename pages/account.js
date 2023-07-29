@@ -1,20 +1,25 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import Image from "next/image";
 import { useDropzone } from "react-dropzone";
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 //INTERNAL IMPORT
 import Style from "../styles/account.module.css";
 import images from "../img";
 import Form from "../AccountPage/Form/Form";
+import { NFTMarketplaceContext  } from "../Context/NFTMarketplaceContext";
 
 const account = () => {
   const [fileUrl, setFileUrl] = useState(null);
   const [formData, setFormData] = useState({
-    // Initialize your form fields here
+    
   });
+
+  //get account from context
+  const { checkIfWalletConnected, currentAccount } = useContext(
+    NFTMarketplaceContext
+  );
 
   const onDrop = useCallback(async (acceptedFile) => {
     setFileUrl(acceptedFile[0]);
@@ -30,7 +35,7 @@ const account = () => {
     console.log(formData);
     try {
       console.log(formData);
-      await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles`, formData);
+      await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}`, formData);
       toast.success("Profile updated successfully!");
     } catch (error) {
       toast.success("Profile updated successfully!");
@@ -41,7 +46,6 @@ const account = () => {
 
   return (
     <div className={Style.account}>
-      <ToastContainer />
 
       <div className={Style.account_info}>
         <h1>Profile settings</h1>
@@ -64,7 +68,7 @@ const account = () => {
           <p className={Style.account_box_img_para}>Change Image</p>
         </div>
         <div className={Style.account_box_from}>
-        <Form formData={formData} setFormData={setFormData} handleSubmit={handleSubmit}   />
+        <Form currentAccount={currentAccount} formData={formData} setFormData={setFormData} handleSubmit={handleSubmit}   />
         </div>
       </div>
     </div>

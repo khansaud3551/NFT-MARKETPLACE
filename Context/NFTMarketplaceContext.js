@@ -4,7 +4,8 @@ import { ethers } from "ethers";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { create as ipfsHttpClient } from "ipfs-http-client";
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 // const projectSecretKey = process.env.NEXT_PUBLIC_SECRECT_KEY;
 // const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString(
@@ -395,17 +396,41 @@ export const NFTMarketplaceProvider = ({ children }) => {
   //---BUY NFTs FUNCTION
   const buyNFT = async (nft) => {
     try {
-      const contract = await connectingWithSmartContract();
-      const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
 
-      const transaction = await contract.createMarketSale(nft.tokenId, {
-        value: price,
-      });
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}`);
 
-      await transaction.wait();
+      const profile = response.data;
+
+      if (!profile.username || !profile.email) {
+
+        toast.warning("Please update your profile before purchasing an NFT.");
+        return router.push("/account");
+        return
+      }
+
+      // const contract = await connectingWithSmartContract();
+      // const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
+
+      // const transaction = await contract.createMarketSale(nft.tokenId, {
+      //   value: price,
+      // });
+
+      // await transaction.wait();
+
+//email
+await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/sendmail`, {
+  to: profile.email,
+  username: profile.username,  // get this from your user profile
+  text: `Congratulations! You successfully bought the NFT '${nft.name}'!`,
+});
+
+
+
+
       router.push("/author");
     } catch (error) {
-      setError("Error While buying NFT");
+      console.log(error,"buy nft");
+      setError("Error While buying NFT",error);
       setOpenError(true);
     }
   };

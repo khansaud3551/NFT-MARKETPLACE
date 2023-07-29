@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //INTERNAL IMPORT
 import Style from "../styles/index.module.css";
@@ -50,11 +52,12 @@ const Home = () => {
 
   const creators = getTopCreators(nfts);
   // console.log(creators);
-
+console.log("nfts",nfts)
   console.log("nfts ccreators", creators);
 
   return (
     <div className={Style.homePage}>
+      <ToastContainer />
       <HeroSection />
       <Service />
       <BigNFTSilder />

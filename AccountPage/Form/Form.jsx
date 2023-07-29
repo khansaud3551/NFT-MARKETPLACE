@@ -11,7 +11,7 @@ import {
 import Style from "./Form.module.css";
 import { Button } from "../../components/componentsindex.js";
 
-const Form = ({ formData, setFormData, handleSubmit }) => {
+const Form = ({currentAccount, formData, setFormData, handleSubmit }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -30,7 +30,7 @@ const Form = ({ formData, setFormData, handleSubmit }) => {
             <input
               name="username"
               type="text"
-              placeholder="shoaib bhai"
+              placeholder="Saud Khan"
               className={Style.Form_box_input_userName}
               value={formData.username}
               onChange={handleChange}
@@ -73,10 +73,10 @@ const Form = ({ formData, setFormData, handleSubmit }) => {
                 <MdOutlineHttp />
               </div>
               <input
-                name="website"
+                name="websiteLink"
                 type="text" 
                 placeholder="website"
-                value={formData.website}
+                value={formData.websiteLink}
                 onChange={handleChange} 
               />
             </div>
@@ -84,46 +84,46 @@ const Form = ({ formData, setFormData, handleSubmit }) => {
 
           <div className={Style.Form_box_input_social}>
             <div className={Style.Form_box_input}>
-              <label htmlFor="facebook">Facebook</label>
+              <label htmlFor="facebookLink">Facebook</label>
               <div className={Style.Form_box_input_box}>
                 <div className={Style.Form_box_input_box_icon}>
                   <TiSocialFacebook />
                 </div>
                 <input 
-                  name="facebook"
+                  name="facebookLink"
                   type="text" 
-                  placeholder="http://shoaib" 
-                  value={formData.facebook}
+                  placeholder="http://facebook.com/saud" 
+                  value={formData.facebookLink}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className={Style.Form_box_input}>
-              <label htmlFor="twitter">Twitter</label>
+              <label htmlFor="twitterLink">Twitter</label>
               <div className={Style.Form_box_input_box}>
                 <div className={Style.Form_box_input_box_icon}>
                   <TiSocialTwitter />
                 </div>
                 <input 
-                  name="twitter"
+                  name="twitterLink"
                   type="text" 
                   placeholder="http://shoaib" 
-                  value={formData.twitter}
+                  value={formData.twitterLink}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className={Style.Form_box_input}>
-              <label htmlFor="instagram">Instagram</label>
+              <label htmlFor="instagramLink">Instagram</label>
               <div className={Style.Form_box_input_box}>
                 <div className={Style.Form_box_input_box_icon}>
                   <TiSocialInstagram />
                 </div>
                 <input 
-                  name="instagram"
+                  name="instagramLink"
                   type="text" 
                   placeholder="http://shoaib" 
-                  value={formData.instagram}
+                  value={formData.instagramLink}
                   onChange={handleChange}
                 />
               </div>
@@ -138,7 +138,7 @@ const Form = ({ formData, setFormData, handleSubmit }) => {
               </div>
               <input
                 type="text"
-                placeholder="0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8"
+                value={currentAccount ? currentAccount : "0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8"}
                 readOnly
               />
               <div className={Style.Form_box_input_box_icon}>
@@ -151,8 +151,7 @@ const Form = ({ formData, setFormData, handleSubmit }) => {
           <button
           type="submit"
          
-              handleClick={handleSubmit}
-              classStyle={Style.button}
+            
           >
             submit
           </button>

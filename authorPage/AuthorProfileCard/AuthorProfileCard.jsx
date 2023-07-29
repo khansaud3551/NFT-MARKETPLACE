@@ -19,7 +19,7 @@ import Style from "./AuthorProfileCard.module.css";
 import images from "../../img";
 import { Button } from "../../components/componentsindex.js";
 
-const AuthorProfileCard = ({ currentAccount }) => {
+const AuthorProfileCard = ({ currentAccount ,  userDetails }) => {
   const [share, setShare] = useState(false);
   const [report, setReport] = useState(false);
 
@@ -49,6 +49,15 @@ const AuthorProfileCard = ({ currentAccount }) => {
     }
   };
 
+  const {
+    username = "Anonymous User",
+    description = "No description provided",
+    facebookLink = "#",
+    instagramLink = "#",
+    linkedInLink = "#",
+    youtubeLink = "#",
+  } = userDetails || {};
+
   return (
     <div className={Style.AuthorProfileCard}>
       <div className={Style.AuthorProfileCard_box}>
@@ -64,10 +73,10 @@ const AuthorProfileCard = ({ currentAccount }) => {
 
         <div className={Style.AuthorProfileCard_box_info}>
           <h2>
-            Dony Herrera{""}{" "}
+          {username}
             <span>
               <MdVerified />
-            </span>{" "}
+            </span>
           </h2>
 
           <div className={Style.AuthorProfileCard_box_info_address}>
@@ -79,21 +88,20 @@ const AuthorProfileCard = ({ currentAccount }) => {
           </div>
 
           <p>
-            Punk #4786 / An OG Cryptopunk Collector, hoarder of NFTs.
-            Contributing to @ether_cards, an NFT Monetization Platform.
+          {description}
           </p>
 
           <div className={Style.AuthorProfileCard_box_info_social}>
-            <a href="#">
+            <a href={facebookLink} target="__blank" >
               <TiSocialFacebook />
             </a>
-            <a href="#">
+            <a href={instagramLink} target="__blank">
               <TiSocialInstagram />
             </a>
-            <a href="#">
+            <a href={linkedInLink} target="__blank">
               <TiSocialLinkedin />
             </a>
-            <a href="#">
+            <a href={youtubeLink} target="__blank">
               <TiSocialYoutube />
             </a>
           </div>

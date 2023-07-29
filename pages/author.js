@@ -54,6 +54,8 @@ const author = () => {
   const [like, setLike] = useState(false);
   const [follower, setFollower] = useState(false);
   const [following, setFollowing] = useState(false);
+  // Default values
+const [userDetails, setUserDetails] = useState([]);
 
   //IMPORT SMART CONTRACT DATA
   const { fetchMyNFTsOrListedNFTs, currentAccount } = useContext(
@@ -78,10 +80,31 @@ const author = () => {
     });
   }, []);
 
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setUserDetails(data);
+    
+    } catch (error) {
+      console.error('Failed to fetch user data:', error);
+    }
+  };
+
+console.log("user information",userDetails)
+
   return (
     <div className={Style.author}>
       <Banner bannerImage={images.creatorbackground2} />
-      <AuthorProfileCard currentAccount={currentAccount} />
+      <AuthorProfileCard currentAccount={currentAccount}  userDetails = {userDetails} />
       <AuthorTaps
         setCollectiables={setCollectiables}
         setCreated={setCreated}
@@ -89,6 +112,7 @@ const author = () => {
         setFollower={setFollower}
         setFollowing={setFollowing}
         currentAccount={currentAccount}
+
       />
 
       <AuthorNFTCardBox

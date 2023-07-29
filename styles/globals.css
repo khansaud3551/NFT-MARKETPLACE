@@ -233,6 +233,11 @@ body {
   color: var(--icons-color);
 }
 
+
+.Toastify__toast-container {
+  z-index: 1000000000 !important;
+}
+
 input{
   color: var(--icons-color);
 }
