@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   RiUserFollowFill,
   RiUserUnfollowFill,
@@ -9,8 +9,10 @@ import {
 import Style from "./FollowerTab.module.css";
 import FollowerTabCard from "./FollowerTabCard/FollowerTabCard";
 import images from "../../img";
+import { getTopCreators } from "../../TopCreators/TopCreators";
+import { NFTMarketplaceContext } from "../../Context/NFTMarketplaceContext";
 
-const FollowerTab = ({ TopCreator }) => {
+const FollowerTab = () => {
   // const CardArray = [
   //   {
   //     background: images.creatorbackground1,
@@ -124,6 +126,25 @@ const FollowerTab = ({ TopCreator }) => {
   const [following, setFollowing] = useState(false);
   const [news, setNews] = useState(false);
 
+
+  const [nfts, setNfts] = useState([]);
+  const [nftsCopy, setNftsCopy] = useState([]);
+  const { fetchNFTs } = useContext(NFTMarketplaceContext);
+
+  useEffect(() => {
+    // if (currentAccount) {
+    fetchNFTs().then((items) => {
+      console.log(nfts);
+      setNfts(items.reverse());
+      setNftsCopy(items);
+    });
+    // }
+  }, []);
+
+  const creators = getTopCreators(nfts);
+
+  console.log(creators);
+
   const openPopular = () => {
     if (!popular) {
       setPopular(true);
@@ -167,7 +188,7 @@ const FollowerTab = ({ TopCreator }) => {
 
       {popular && (
         <div className={Style.followerTab_box}>
-          {TopCreator.map((el, i) => (
+          {creators.map((el, i) => (
             <FollowerTabCard key={i + 1} i={i} el={el} />
           ))}
         </div>

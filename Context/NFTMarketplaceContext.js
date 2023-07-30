@@ -408,14 +408,14 @@ export const NFTMarketplaceProvider = ({ children }) => {
         return
       }
 
-      // const contract = await connectingWithSmartContract();
-      // const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
+      const contract = await connectingWithSmartContract();
+      const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
 
-      // const transaction = await contract.createMarketSale(nft.tokenId, {
-      //   value: price,
-      // });
+      const transaction = await contract.createMarketSale(nft.tokenId, {
+        value: price,
+      });
 
-      // await transaction.wait();
+      await transaction.wait();
 
 //email
 await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/sendmail`, {
@@ -424,6 +424,20 @@ await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/sendmail`, {
   text: `Congratulations! You successfully bought the NFT '${nft.name}'!`,
 });
 
+
+  // Get the seller and buyer of the NFT
+  // const sellerAndBuyer = await contract.getSellerAndBuyerOfNFT(tokenId);
+  // console.log(sellerAndBuyer[0]);
+
+  // // Save NFT data in your backend including seller and buyer
+  // //'http://localhost:8080/api/nfts'
+  // //use process.env.NEXT_PUBLIC_API_URL
+  // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/nfts`, {
+  //     ipfsPath: added.path,
+  //     category: category,
+  //     seller: sellerAndBuyer[0],  // assuming that the getSellerAndBuyerOfNFT returns an object with seller and buyer properties
+  //     owner: sellerAndBuyer[1]
+  // });
 
 
 

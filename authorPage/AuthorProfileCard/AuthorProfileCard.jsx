@@ -80,7 +80,12 @@ const AuthorProfileCard = ({ currentAccount ,  userDetails }) => {
           </h2>
 
           <div className={Style.AuthorProfileCard_box_info_address}>
-            <input type="text" value={currentAccount} id="myInput" />
+            <input type="text" value={currentAccount} onChange={
+              (e) => {
+                e.preventDefault();
+              }
+              
+            } id="myInput" />
             <FiCopy
               onClick={() => copyAddress()}
               className={Style.AuthorProfileCard_box_info_address_icon}
