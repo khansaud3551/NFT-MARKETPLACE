@@ -1,7 +1,7 @@
 ///0x5FbDB2315678afecb367f032d93F642f64180aa3
 //0x5FbDB2315678afecb367f032d93F642f64180aa3
 //0xDdE8df52C3399FA528A1d8e8c6F4e52Ed1b2116E
-//0x197542ad4a33498f7F065ABf8f94728D7d152258
+//0x18D6B916262aa08bf9362A73948b33237a686Ed3
 
 import nftMarketplace from "./NFTMarketplace.json";
 import transferFunds from "./TransferFunds.json";
@@ -12,7 +12,7 @@ import transferFunds from "./TransferFunds.json";
 // export const NFTMarketplaceABI = nftMarketplace.abi;
 
 export const NFTMarketplaceAddress =
-  "0x197542ad4a33498f7F065ABf8f94728D7d152258";
+  "0x18D6B916262aa08bf9362A73948b33237a686Ed3";
 export const NFTMarketplaceABI = nftMarketplace.abi;
 
 //TRANSFER FUNDS
