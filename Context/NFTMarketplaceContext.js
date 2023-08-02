@@ -223,6 +223,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}/collections`, {
           collectionID: collection._id
         });
+        router.push("/searchPage");
       }
       
     } catch (error) {

@@ -107,7 +107,7 @@ const Form = ({currentAccount, formData, setFormData, handleSubmit }) => {
                 <input 
                   name="twitterLink"
                   type="text" 
-                  placeholder="http://shoaib" 
+                  placeholder="http://saud" 
                   value={formData.twitterLink}
                   onChange={handleChange}
                 />
@@ -122,7 +122,7 @@ const Form = ({currentAccount, formData, setFormData, handleSubmit }) => {
                 <input 
                   name="instagramLink"
                   type="text" 
-                  placeholder="http://shoaib" 
+                  placeholder="http://saud" 
                   value={formData.instagramLink}
                   onChange={handleChange}
                 />
