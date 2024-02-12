@@ -10,6 +10,7 @@ const Loader = () => {
     <div className={Style.Loader}>
       <div className={Style.Loader_box}>
         <div className={Style.Loader_box_img}>
+        <h1>test</h1>
           <Image
             src={images.loader}
             alt="loader"
