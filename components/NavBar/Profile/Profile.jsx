@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { FaUserAlt, FaRegImage, FaUserEdit } from "react-icons/fa";
 import { MdHelpCenter } from "react-icons/md";
@@ -8,8 +8,36 @@ import Link from "next/link";
 //INTERNAL IMPORT
 import Style from "./Profile.module.css";
 import images from "../../../img";
+import axios from "axios";
 
-const Profile = ({ currentAccount }) => {
+const Profile = ({userDetails ,  setUserDetails ,currentAccount }) => {
+
+
+
+      // fetch the user details ased on the current address
+      useEffect(() => {
+        if (currentAccount) {
+          fetchUserData();
+        }
+      }, [currentAccount]);
+    
+      //fetch the user details
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}`
+          );
+      
+          const data = await response.data;
+          console.log("user data", data);
+          setUserDetails(data);
+        } catch (error) {
+    
+          console.error("Failed to fetch user data:", error);
+        }
+      };
+    
+
   return (
     <div className={Style.profile}>
       <div className={Style.profile_account}>
@@ -22,7 +50,9 @@ const Profile = ({ currentAccount }) => {
         />
 
         <div className={Style.profile_account_info}>
-          <p>Saud Khan</p>
+          <p>
+            {userDetails?.username ? userDetails?.username : "User Name"}
+          </p>
           <small>{currentAccount.slice(0, 18)}..</small>
         </div>
       </div>

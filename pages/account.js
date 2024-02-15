@@ -32,15 +32,56 @@ const account = () => {
   });
 
   const handleSubmit = async (event) => {
-    console.log(formData);
+    if (!checkIfWalletConnected()) {
+      toast.error('Please connect your wallet first');
+      return;
+    }
+
+    let profileExists = false;
+
     try {
-      console.log(formData);
-      await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}`, formData);
-      toast.success("Profile updated successfully!");
+      const responseAccount = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}`);
+      const profile = responseAccount.data;
+
+      if (profile && profile.username && profile.email) {
+        profileExists = true;
+      }
     } catch (error) {
-      toast.success("Profile updated successfully!");
-      // toast.error("An error occurred while updating profile.");
-      console.error("An error occurred while updating profile:", error);
+      if (error.response && error.response.status === 404) {
+        // Profile does not exist, handle accordingly
+        profileExists = false;
+      } else {
+    
+        toast.error('An error occurred while checking the profile');
+        console.error('Error checking profile:', error);
+        return; 
+      }
+    }
+  
+    const apiEndpoint = profileExists ? `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/${currentAccount}` : `${process.env.NEXT_PUBLIC_API_URL}/api/profiles`;
+      //add wallet address to form data
+      formData.walletAddress = currentAccount;
+      console.log('apiEndpoint', apiEndpoint);
+      console.log('formData', formData);
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        //send form data
+        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' }, // Use if sending JSON data
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        // Handle success (e.g., display a success message)
+        toast.success('Profile processed successfully');
+      } else {
+        // Handle server errors or invalid responses
+        toast.error('An error occurred while processing your profile');
+      }
+    } catch (error) {
+      // Handle network errors
+      toast.error('Failed to send data to the server');
     }
   };
 

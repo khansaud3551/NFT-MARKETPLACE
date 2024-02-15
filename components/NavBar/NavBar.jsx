@@ -24,8 +24,14 @@ const NavBar = () => {
   const [notification, setNotification] = useState(false);
   const [profile, setProfile] = useState(false);
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const [userDetails , setUserDetails] = useState({});
 
   const router = useRouter();
+
+  //SMART CONTRACT SECTION
+  const { currentAccount, connectWallet, openError } = useContext(
+    NFTMarketplaceContext
+  );
 
   const openMenu = (e) => {
     const btnText = e.target.innerText;
@@ -77,10 +83,6 @@ const NavBar = () => {
     }
   };
 
-  //SMART CONTRACT SECTION
-  const { currentAccount, connectWallet, openError } = useContext(
-    NFTMarketplaceContext
-  );
 
   return (
     <div className={Style.navbar}>
@@ -153,7 +155,7 @@ const NavBar = () => {
                 className={Style.navbar_container_right_profile}
               />
 
-              {profile && <Profile currentAccount={currentAccount} />}
+              {profile && <Profile userDetails={userDetails} setUserDetails={setUserDetails} currentAccount={currentAccount} />}
             </div>
           </div>
 
